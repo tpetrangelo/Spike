@@ -1,98 +1,67 @@
-#!/usr/bin/env python
-import praw
-from flask import Flask, abort, request, render_template, url_for
+# -*- coding: utf-8 -*-
+import dash
+import dash_core_components as dcc
+import dash_html_components as html
+from dash.dependencies import Input, Output
 import requests
-import requests.auth
+import plotly.graph_objs as go
+from collections import deque
+import plotly
+import random
+
+X = deque(maxlen=20)
+X.append(1)
+Y = deque(maxlen=20)
+Y.append(0)
+
+external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+
+app.layout = html.Div([
+    html.Div([html.H1('Spike'),
+              html.H6('Who\'s Where Now'),
+              html.Br(),
+              dcc.Input(id='input-subreddits', type='text', placeholder='Add a subreddit', debounce=True), ],
+             style={'textAlign': 'center'}),
+    html.Hr(),
+    html.Div(id='chosen-subreddit'),
+    dcc.Graph(id='live-graph', animate=True),
+    dcc.Interval(
+        id='graph-update',
+        interval=2000,
+        n_intervals=0
+    ),
+])
 
 
-CLIENT_ID = '8u4U4079k2ir3g'
-CLIENT_SECRET = 'hB-jP41agCJb8MvF1-hn_Akt4-s'
-REDIRECT_URI = "http://localhost:65010/reddit_callback"
-
-app = Flask(__name__, template_folder='templates')
-
-reddit = praw.Reddit(client_id=CLIENT_ID,
-                     client_secret=CLIENT_SECRET,
-                     redirect_uri=REDIRECT_URI,
-                     user_agent="Web App:Spike:v0.0.1: By /u/SpikeDevTom")
+@app.callback(
+    Output('chosen-subreddit', 'children'),
+    [Input('input-subreddits', 'value')])
+def subreddit_input(submitted_subreddit):
+    return submitted_subreddit
 
 
+@app.callback(Output('live-graph', 'figure'),
+              [Input('graph-update', 'n_intervals'), Input('chosen-subreddit', 'children')])
+def update_graph_scatter(n, subreddit):
+    url = f'https://www.reddit.com/r/{subreddit}/about.json'
+    r = requests.get(url, headers={'user-agent': 'Web App:Spike:v0.0.1: By /u/SpikeDevTom'})
+    response = r.json()
+    converted_users = int(format(response["data"]["accounts_active"]))
+    X.append(X[-1] + 1)
+    Y.append(converted_users)
 
-def base_headers():
-    return {"User-Agent": user_agent()}
+    data = plotly.graph_objs.Scatter(
+        x=list(X),
+        y=list(Y),
+        name='Scatter',
+        mode='lines+markers'
+    )
 
-
-def user_agent():
-    return 'Web App:Spike:v0.0.1: By /u/SpikeDevTom'
-
-
-@app.route('/')
-def homepage():
-    text = '<a href="%s">Authenticate with reddit</a>'
-    return text % make_authorization_url()
-
-
-@app.route('/reddit_callback')
-def reddit_callback():
-    error = request.args.get('error', '')
-    if error:
-        return "Error: " + error
-    state = request.args.get('state', '')
-    if not is_valid_state(state):
-        abort(403)
-    code = request.args.get('code')
-    access_token = reddit.auth.authorize(code)
-    '''
-    subreddits = list(reddit.user.subreddits(limit=None))
-
-    for subreddit in subreddits:
-        subreddit_information = get_subreddit_ratio(subreddit.display_name, reddit)
-
-        ratio = round(subreddit_information['ratio'], 2)
-
-        active_users = subreddit_information['active_users']
-        subscriber_count = subreddit_information['subscriber_count']
-        print("%s --> %s%% of users (%s out of %s)" % (subreddit, ratio, f'{active_users:,}', f'{subscriber_count:,}'))
-    '''
-    return render_template('index.html', username=reddit.user.me())
-
-
-def get_subreddit_ratio(sub_name, reddit_instance):
-    subreddit = reddit_instance.subreddit(sub_name)
-    active_users = subreddit.active_user_count
-    subscriber_count = subreddit.subscribers
-    ratio = (active_users / subscriber_count) * 100
-    return {'ratio': ratio, 'active_users': active_users, 'subscriber_count': subscriber_count}
-
-
-def save_created_state(state):
-    pass
-
-
-def is_valid_state(state):
-    return True
-
-
-def get_token(code):
-    client_auth = requests.auth.HTTPBasicAuth(CLIENT_ID, CLIENT_SECRET)
-    post_data = {"grant_type": "authorization_code",
-                 "code": code,
-                 "redirect_uri": REDIRECT_URI}
-    headers = base_headers()
-    response = requests.post("https://ssl.reddit.com/api/v1/access_token",
-                             auth=client_auth,
-                             headers=headers,
-                             data=post_data)
-    token_json = response.json()
-    return token_json["access_token"]
-
-
-def make_authorization_url():
-    url = reddit.auth.url(["mysubreddits", "read", "identity"], "...", "permanent")
-    return url
-
-
+    return {'data': [data], 'layout': go.Layout(xaxis=dict(range=[min(X), max(X)]),
+                                                yaxis=dict(range=[min(Y), max(Y)]), )}
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=65010)
+    app.run_server(debug=True, dev_tools_ui=False)
