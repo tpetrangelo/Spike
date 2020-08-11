@@ -3,38 +3,39 @@ import dash_core_components as dcc
 import dash_html_components as html
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output
+from dash.exceptions import PreventUpdate
 import requests
 import plotly.graph_objs as go
 from collections import deque
 import plotly
 
 X1 = deque(maxlen=20)
-X1.append(1)
+X1.append(0)
 Y1 = deque(maxlen=20)
 Y1.append(0)
 
 X2 = deque(maxlen=20)
-X2.append(1)
+X2.append(0)
 Y2 = deque(maxlen=20)
 Y2.append(0)
 
 X3 = deque(maxlen=20)
-X3.append(1)
+X3.append(0)
 Y3 = deque(maxlen=20)
 Y3.append(0)
 
 X4 = deque(maxlen=20)
-X4.append(1)
+X4.append(0)
 Y4 = deque(maxlen=20)
 Y4.append(0)
 
 X5 = deque(maxlen=20)
-X5.append(1)
+X5.append(0)
 Y5 = deque(maxlen=20)
 Y5.append(0)
 
 X6 = deque(maxlen=20)
-X6.append(1)
+X6.append(0)
 Y6 = deque(maxlen=20)
 Y6.append(0)
 
@@ -72,7 +73,7 @@ app.layout = html.Div([
             dbc.Col(html.Div(id='chosen-subreddit-1')),
             dbc.Col(html.Div(id='chosen-subreddit-2')),
             dbc.Col(html.Div(id='chosen-subreddit-3')),
-        ], style={'margin': 'auto'}
+        ], style={'margin': 'auto', 'text-align': 'center'}
     ),
     dbc.Container([
         dbc.Row(
@@ -165,6 +166,8 @@ def subreddit_input_1(submitted_subreddit):
 @app.callback(Output('graph-1', 'figure'),
               [Input('graph-update', 'n_intervals'), Input('chosen-subreddit-1', 'children')])
 def update_graph_1(n, subreddit):
+    if subreddit is None:
+        raise PreventUpdate
     url = f'https://www.reddit.com/r/{subreddit}/about.json'
     converted_users = process_data(url)
     X1.append(X1[-1] + 1)
@@ -186,6 +189,8 @@ def subreddit_input_2(submitted_subreddit):
 @app.callback(Output('graph-2', 'figure'),
               [Input('graph-update', 'n_intervals'), Input('chosen-subreddit-2', 'children')])
 def update_graph_2(n, subreddit):
+    if subreddit is None:
+        raise PreventUpdate
     url = f'https://www.reddit.com/r/{subreddit}/about.json'
     converted_users = process_data(url)
     X2.append(X2[-1] + 1)
@@ -207,6 +212,8 @@ def subreddit_input_3(submitted_subreddit):
 @app.callback(Output('graph-3', 'figure'),
               [Input('graph-update', 'n_intervals'), Input('chosen-subreddit-3', 'children')])
 def update_graph_3(n, subreddit):
+    if subreddit is None:
+        raise PreventUpdate
     url = f'https://www.reddit.com/r/{subreddit}/about.json'
     converted_users = process_data(url)
     X3.append(X3[-1] + 1)
@@ -228,6 +235,8 @@ def subreddit_input_4(submitted_subreddit):
 @app.callback(Output('graph-4', 'figure'),
               [Input('graph-update', 'n_intervals'), Input('chosen-subreddit-4', 'children')])
 def update_graph_4(n, subreddit):
+    if subreddit is None:
+        raise PreventUpdate
     url = f'https://www.reddit.com/r/{subreddit}/about.json'
     converted_users = process_data(url)
     X4.append(X4[-1] + 1)
@@ -249,6 +258,8 @@ def subreddit_input_5(submitted_subreddit):
 @app.callback(Output('graph-5', 'figure'),
               [Input('graph-update', 'n_intervals'), Input('chosen-subreddit-5', 'children')])
 def update_graph_5(n, subreddit):
+    if subreddit is None:
+        raise PreventUpdate
     url = f'https://www.reddit.com/r/{subreddit}/about.json'
     converted_users = process_data(url)
     X5.append(X5[-1] + 1)
@@ -270,6 +281,8 @@ def subreddit_input_6(submitted_subreddit):
 @app.callback(Output('graph-6', 'figure'),
               [Input('graph-update', 'n_intervals'), Input('chosen-subreddit-6', 'children')])
 def update_graph_6(n, subreddit):
+    if subreddit is None:
+        raise PreventUpdate
     url = f'https://www.reddit.com/r/{subreddit}/about.json'
     converted_users = process_data(url)
     X6.append(X6[-1] + 1)
