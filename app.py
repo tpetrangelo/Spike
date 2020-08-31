@@ -145,14 +145,14 @@ app.layout = html.Div([
 
 
 @app.callback(
-    Output('chosen-subreddit-1', 'children'),
+    Output('subreddit-1', 'children'),
     [Input('subreddit-1', 'value')])
 def subreddit_input_1(submitted_subreddit):
     return submitted_subreddit
 
 
 @app.callback(Output('graph-1', 'figure'),
-              [Input('graph-update', 'n_intervals'), Input('chosen-subreddit-1', 'children')])
+              [Input('graph-update', 'n_intervals'), Input('subreddit-1', 'children')])
 def update_graph_1(n, subreddit):
     if subreddit is None:
         raise PreventUpdate
@@ -168,14 +168,14 @@ def update_graph_1(n, subreddit):
 
 
 @app.callback(
-    Output('chosen-subreddit-2', 'children'),
+    Output('subreddit-2', 'children'),
     [Input('subreddit-2', 'value')])
 def subreddit_input_2(submitted_subreddit):
     return submitted_subreddit
 
 
 @app.callback(Output('graph-2', 'figure'),
-              [Input('graph-update', 'n_intervals'), Input('chosen-subreddit-2', 'children')])
+              [Input('graph-update', 'n_intervals'), Input('subreddit-2', 'children')])
 def update_graph_2(n, subreddit):
     if subreddit is None:
         raise PreventUpdate
@@ -191,14 +191,14 @@ def update_graph_2(n, subreddit):
 
 
 @app.callback(
-    Output('chosen-subreddit-3', 'children'),
+    Output('subreddit-3', 'children'),
     [Input('subreddit-3', 'value')])
 def subreddit_input_3(submitted_subreddit):
     return submitted_subreddit
 
 
 @app.callback(Output('graph-3', 'figure'),
-              [Input('graph-update', 'n_intervals'), Input('chosen-subreddit-3', 'children')])
+              [Input('graph-update', 'n_intervals'), Input('subreddit-3', 'children')])
 def update_graph_3(n, subreddit):
     if subreddit is None:
         raise PreventUpdate
@@ -214,14 +214,14 @@ def update_graph_3(n, subreddit):
 
 
 @app.callback(
-    Output('chosen-subreddit-4', 'children'),
+    Output('subreddit-4', 'children'),
     [Input('subreddit-4', 'value')])
 def subreddit_input_4(submitted_subreddit):
     return submitted_subreddit
 
 
 @app.callback(Output('graph-4', 'figure'),
-              [Input('graph-update', 'n_intervals'), Input('chosen-subreddit-4', 'children')])
+              [Input('graph-update', 'n_intervals'), Input('subreddit-4', 'children')])
 def update_graph_4(n, subreddit):
     if subreddit is None:
         raise PreventUpdate
@@ -237,14 +237,14 @@ def update_graph_4(n, subreddit):
 
 
 @app.callback(
-    Output('chosen-subreddit-5', 'children'),
+    Output('subreddit-5', 'children'),
     [Input('subreddit-5', 'value')])
 def subreddit_input_5(submitted_subreddit):
     return submitted_subreddit
 
 
 @app.callback(Output('graph-5', 'figure'),
-              [Input('graph-update', 'n_intervals'), Input('chosen-subreddit-5', 'children')])
+              [Input('graph-update', 'n_intervals'), Input('subreddit-5', 'children')])
 def update_graph_5(n, subreddit):
     if subreddit is None:
         raise PreventUpdate
@@ -260,14 +260,14 @@ def update_graph_5(n, subreddit):
 
 
 @app.callback(
-    Output('chosen-subreddit-6', 'children'),
+    Output('subreddit-6', 'children'),
     [Input('subreddit-6', 'value')])
 def subreddit_input_6(submitted_subreddit):
     return submitted_subreddit
 
 
 @app.callback(Output('graph-6', 'figure'),
-              [Input('graph-update', 'n_intervals'), Input('chosen-subreddit-6', 'children')])
+              [Input('graph-update', 'n_intervals'), Input('subreddit-6', 'children')])
 def update_graph_6(n, subreddit):
     if subreddit is None:
         raise PreventUpdate
