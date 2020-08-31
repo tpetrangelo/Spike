@@ -168,7 +168,7 @@ def subreddit_input_1(submitted_subreddit):
 def update_graph_1(n, subreddit):
     if subreddit is None:
         raise PreventUpdate
-    url = f'https://www.reddit.com/r/{subreddit}/about.json'
+    url = 'https://www.reddit.com/r/{}/about.json'.format(subreddit)
     converted_users = process_data(url)
     X1.append(X1[-1] + 1)
     Y1.append(converted_users)
@@ -191,7 +191,7 @@ def subreddit_input_2(submitted_subreddit):
 def update_graph_2(n, subreddit):
     if subreddit is None:
         raise PreventUpdate
-    url = f'https://www.reddit.com/r/{subreddit}/about.json'
+    url = 'https://www.reddit.com/r/{}/about.json'.format(subreddit)
     converted_users = process_data(url)
     X2.append(X2[-1] + 1)
     Y2.append(converted_users)
@@ -214,7 +214,7 @@ def subreddit_input_3(submitted_subreddit):
 def update_graph_3(n, subreddit):
     if subreddit is None:
         raise PreventUpdate
-    url = f'https://www.reddit.com/r/{subreddit}/about.json'
+    url = 'https://www.reddit.com/r/{}/about.json'.format(subreddit)
     converted_users = process_data(url)
     X3.append(X3[-1] + 1)
     Y3.append(converted_users)
@@ -237,7 +237,7 @@ def subreddit_input_4(submitted_subreddit):
 def update_graph_4(n, subreddit):
     if subreddit is None:
         raise PreventUpdate
-    url = f'https://www.reddit.com/r/{subreddit}/about.json'
+    url = 'https://www.reddit.com/r/{}/about.json'.format(subreddit)
     converted_users = process_data(url)
     X4.append(X4[-1] + 1)
     Y4.append(converted_users)
@@ -260,7 +260,7 @@ def subreddit_input_5(submitted_subreddit):
 def update_graph_5(n, subreddit):
     if subreddit is None:
         raise PreventUpdate
-    url = f'https://www.reddit.com/r/{subreddit}/about.json'
+    url = 'https://www.reddit.com/r/{}/about.json'.format(subreddit)
     converted_users = process_data(url)
     X5.append(X5[-1] + 1)
     Y5.append(converted_users)
@@ -283,7 +283,7 @@ def subreddit_input_6(submitted_subreddit):
 def update_graph_6(n, subreddit):
     if subreddit is None:
         raise PreventUpdate
-    url = f'https://www.reddit.com/r/{subreddit}/about.json'
+    url = 'https://www.reddit.com/r/{}/about.json'.format(subreddit)
     converted_users = process_data(url)
     X6.append(X6[-1] + 1)
     Y6.append(converted_users)
