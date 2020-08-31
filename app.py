@@ -55,7 +55,7 @@ app.layout = html.Div([
                 dbc.Col(dcc.Input(id='subreddit-1', type='text', placeholder='Add a subreddit', debounce=True)),
                 dbc.Col(dcc.Input(id='subreddit-2', type='text', placeholder='Add a subreddit', debounce=True)),
                 dbc.Col(dcc.Input(id='subreddit-3', type='text', placeholder='Add a subreddit', debounce=True)),
-            ], style={'border-style': 'solid'}, no_gutters=True,
+            ], no_gutters=True,
         )
     ], style={'margin': 'auto'}),
 
@@ -65,16 +65,10 @@ app.layout = html.Div([
                 dbc.Col(dcc.Input(id='subreddit-4', type='text', placeholder='Add a subreddit', debounce=True)),
                 dbc.Col(dcc.Input(id='subreddit-5', type='text', placeholder='Add a subreddit', debounce=True)),
                 dbc.Col(dcc.Input(id='subreddit-6', type='text', placeholder='Add a subreddit', debounce=True)),
-            ], style={'border-style': 'solid'}, no_gutters=True,
+            ], no_gutters=True,
         )
     ], style={'margin': 'auto'}),
-    dbc.Row(
-        [
-            dbc.Col(html.Div(id='chosen-subreddit-1')),
-            dbc.Col(html.Div(id='chosen-subreddit-2')),
-            dbc.Col(html.Div(id='chosen-subreddit-3')),
-        ], style={'margin': 'auto', 'text-align': 'center'}
-    ),
+    
     dbc.Container([
         dbc.Row(
             [
@@ -108,13 +102,7 @@ app.layout = html.Div([
             ], style={'vertical-align': 'middle'}
         ),
     ]),
-    dbc.Row(
-        [
-            dbc.Col(html.Div(id='chosen-subreddit-4')),
-            dbc.Col(html.Div(id='chosen-subreddit-5')),
-            dbc.Col(html.Div(id='chosen-subreddit-6')),
-        ], style={'margin': 'auto'}
-    ),
+  
     dbc.Container([
         dbc.Row(
             [
